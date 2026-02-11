@@ -1,0 +1,23 @@
+services:
+  - type: cron
+    name: loyverse-inventory-monitor
+    env: node
+    plan: free
+    schedule: "*/15 * * * *"
+    buildCommand: "npm install && npx playwright install chromium"
+    startCommand: "node index.js"
+    envVars:
+      - key: LOYVERSE_EMAIL
+        sync: false
+      - key: LOYVERSE_PASSWORD
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: ALERT_EMAIL
+        sync: false
+    disk:
+      name: state-storage
+      mountPath: /tmp
+      sizeGB: 1
